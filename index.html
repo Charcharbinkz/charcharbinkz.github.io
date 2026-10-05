@@ -2,138 +2,235 @@
 <html lang="en">
 <head> 
   <meta charset="UTF-8">
-  <title>GC Design System • Accessibility Status </title>
+  <title>GC Design System • Accessibility Status</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 40px;
       background-color: #f9f9f9;
     }
-    h1, h2, h3 {
+
+    h1 {
       color: #333;
     }
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-    input[type="text"], textarea, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    button {
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #0078d4;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      background-color: #fff;
     }
-    button:hover {
-      background-color: #005fa3;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f1f1;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
     }
   </style>
 </head>
 
-  
 <body>
+
   <h1>GC Design System • Accessibility Status</h1>
-  <form>
-    <h2>Component Information</h2>
-    <label>Component Name</label>
-    <input type="text" name="componentName">
-    <label>Description</label>
-    <textarea name="description"></textarea>
-    <label>Component Owners</label>
-    <input type="text" name="owners">
-    <label>Status</label>
-    <input type="text" name="status" value="In progress">
 
-    <h2>Technical Specifications</h2>
-    <h3>Element Names</h3>
-    <table>
-      <tr><th>Framework</th><th>Element Name</th></tr>
-      <tr><td>None (web component)</td><td><input type="text" name="webElement"></td></tr>
-      <tr><td>React</td><td><input type="text" name="reactElement"></td></tr>
-      <tr><td>Angular</td><td><input type="text" name="angularElement"></td></tr>
-      <tr><td>Vue</td><td><input type="text" name="vueElement"></td></tr>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Component name</th>
+        <th scope="col">WCAG rating</th>
+        <th scope="col">Last tested</th>
+      </tr>
+    </thead>
 
-    <h3>Properties</h3>
-    <textarea name="properties" placeholder="List properties and details"></textarea>
-
-    <h3>Slots</h3>
-    <textarea name="slots" placeholder="List slots and details"></textarea>
-
-    <h2>Functional Requirements</h2>
-    <h3>Behaviour</h3>
-    <textarea name="behaviour" placeholder="Describe component behaviour"></textarea>
-    <h3>User Interface</h3>
-    <textarea name="ui" placeholder="Describe UI requirements"></textarea>
-    <h3>Figma Specific</h3>
-    <textarea name="figma" placeholder="Describe Figma requirements"></textarea>
-
-    <h2>Localization</h2>
-    <table>
-      <tr><th>English (en-CA)</th><th>French (fr-CA)</th></tr>
-      <tr><td><input type="text" name="englishText"></td><td><input type="text" name="frenchText"></td></tr>
-    </table>
-
-    <h2>Use Cases</h2>
-    <textarea name="useCases"></textarea>
-
-    <h2>Decisions</h2>
-    <h3>Technical Decisions</h3>
-    <textarea name="technicalDecisions"></textarea>
-    <h3>Design Decisions</h3>
-    <textarea name="designDecisions"></textarea>
-
-    <h2>Appendix</h2>
-    <label>Thumbnail Image URL</label>
-    <input type="text" name="thumbnail">
-    <label>Anatomy</label>
-    <textarea name="anatomy"></textarea>
-    <label>Policy Review</label>
-    <textarea name="policyReview"></textarea>
-    <label>Definitions</label>
-    <textarea name="definitions"></textarea>
-    <label>Reference Links</label>
-    <textarea name="references"></textarea>
-
-    <button type="submit">Submit Component Requirements</button>
-  </form>
-
-  <script>
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const formData = Object.fromEntries(new FormData(e.target).entries());
-  await fetch("/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData)
-  });
-  alert("Form submitted successfully!");
-});
-</script>
+    <tbody>
+      <tr>
+        <td>Alert</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Breadcrumbs</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Button</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Card</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Checkboxes</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Container</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Date input</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Date modified</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Details</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Error message</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Error summary</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Fieldset</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>File uploader</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Footer</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Grid</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Header</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Heading</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Icon</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Input</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Language toggle</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Link</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Notice</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Pagination</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Radios</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Screenreader-only</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Search</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Select</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Side navigation</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Signature</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Stepper</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Table</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Text</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Textarea</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Theme and topic menu</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Top navigation</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 
 </body>
 </html>
