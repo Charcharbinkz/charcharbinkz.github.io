@@ -82,15 +82,22 @@
       
       data.records.forEach(record => {
         const fields = record.fields;
+
+        console.log(fields);
         
         // Create a new row
         const row = document.createElement('tr');
+
+        // Column names
+        // fields = ["Component Name", "WCAG Version", "WCAG Conformance Level", "Latest version?"]
+        
         
         // Map fields to your columns (Change 'Column Name' to match Airtable exactly)
         row.innerHTML = `
-          <td>${fields['Column 1'] || ''}</td>
-          <td>${fields['Column 2'] || ''}</td>
-          <td>${fields['Column 3'] || ''}</td>
+          <td>${fields['Component Name'] || ''}</td>
+          <td>${fields['WCAG Version'] || ''}</td>
+          <td>${fields['WCAG Conformance Level'] || ''}</td>
+          <td>${fields['Latest version?'] || ''}</td>
         `;
         
         tableBody.appendChild(row);
