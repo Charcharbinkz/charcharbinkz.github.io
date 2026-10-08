@@ -1,1 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Roadmap • GC Design System</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      color: #333;
+      background-color: #fff;
+      line-height: 1.5;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    ul {
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    .status {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main>
+
+    <h1>Roadmap</h1>
+
+    <ul id="roadmap-data">
+      <li>Loading...</li>
+    </ul>
+
+  </main>
+
+
+  <script>
+
+    // --------------------------------------------------
+    // Airtable configuration
+    // --------------------------------------------------
+
+    const AIRTABLE_PAT = 'YOUR_EXISTING_TOKEN';
+
+    const BASE_ID = 'app2Jrt1yk2MisSqo';
+
+    const TABLE_ID = 'tbl31F7EhBfNxD3EI';
+
+
+    // --------------------------------------------------
+    // Get Status and Goal from Airtable
+    // --------------------------------------------------
+
+    async function fetchRoadmapData() {
+
+      const url =
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}` +
+        `?fields[]=Status` +
+        `&fields[]=Goal`;
+
+
+      try {
+
+        const response = await fetch(url, {
+
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_PAT}`
+          }
+
+        });
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Airtable request failed: ${response.status}`
+          );
+
+        }
+
+
+        const data = await response.json();
+
+        console.log('Airtable roadmap data:', data);
+
+        return data.records;
+
+      }
+
+
+      catch (error) {
+
+        console.error(
+          'Error fetching roadmap data from Airtable:',
+          error
+        );
+
+        return [];
+
+      }
+
+    }
+
+
+    // --------------------------------------------------
+    // Display the roadmap
+    // --------------------------------------------------
+
+    async function loadRoadmap() {
+
+      const container =
+        document.getElementById('roadmap-data');
+
+
+      const records =
+        await fetchRoadmapData();
+
+
+      container.innerHTML = '';
+
+
+      records.forEach(record => {
+
+        const fields = record.fields;
+
+        const status =
+          fields['Status'] || '';
+
+        const goal =
+          fields['Goal'] || '';
+
+
+        const listItem =
+          document.createElement('li');
+
+
+        listItem.innerHTML = `
+          <span class="status">${status}</span>
+          — ${goal}
+        `;
+
+
+        container.appendChild(listItem);
+
+      });
+
+
+      if (records.length === 0) {
+
+        container.innerHTML = `
+          <li>No roadmap information found.</li>
+        `;
+
+      }
+
+    }
+
+
+    // --------------------------------------------------
+    // Run when the page loads
+    // --------------------------------------------------
+
+    loadRoadmap();
+
+  </script>
+
+</body>
+
+</html>
