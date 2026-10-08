@@ -158,7 +158,7 @@
         const fields = records[0].fields;
 
         document.getElementById('airtable-data').innerHTML = `
-          <p>WCAG Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
+          <p>WCAG version 2.1 ${fields['WCAG Conformance Level'] || ''}</p>
           <p>Version last tested: ${fields['Version last tested'] || ''}</p>
         `;
       }
