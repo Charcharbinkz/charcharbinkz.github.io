@@ -122,55 +122,79 @@
 
     async function loadRoadmap() {
 
-      const container =
-        document.getElementById('roadmap-data');
+  const container =
+    document.getElementById('roadmap-data');
+
+  const records =
+    await fetchRoadmapData();
+
+  container.innerHTML = '';
 
 
-      const records =
-        await fetchRoadmapData();
+  // Only use records where Quarter = Quarter 1
+
+  const quarter1Records =
+    records.filter(record => {
+
+      return record.fields['Quarter'] === 'Quarter 1';
+
+    });
 
 
-      container.innerHTML = '';
+  // Add the Quarter 1 heading
+
+  const heading =
+    document.createElement('h2');
+
+  heading.textContent = 'Quarter 1';
+
+  container.appendChild(heading);
 
 
-      records.forEach(record => {
+  // Create the bullet list
 
-        const fields = record.fields;
-
-        console.log('Record:', fields);
-
-
-        const status =
-          fields['Status'] || '';
-
-        const goal =
-          fields['Goal'] || '';
+  const list =
+    document.createElement('ul');
 
 
-        const listItem =
-          document.createElement('li');
+  quarter1Records.forEach(record => {
+
+    const fields = record.fields;
+
+    const status =
+      fields['Status'] || '';
+
+    const goal =
+      fields['Goal'] || '';
 
 
-        listItem.innerHTML = `
-          <span class="status">${status}</span>
-          — ${goal}
-        `;
+    const listItem =
+      document.createElement('li');
 
 
-        container.appendChild(listItem);
+    listItem.innerHTML = `
+      <span class="status">${status}</span>
+      — ${goal}
+    `;
 
-      });
+
+    list.appendChild(listItem);
+
+  });
 
 
-      if (records.length === 0) {
+  container.appendChild(list);
 
-        container.innerHTML = `
-          <li>No records found in Airtable.</li>
-        `;
 
-      }
+  if (quarter1Records.length === 0) {
 
-    }
+    container.innerHTML += `
+      <p>No roadmap information found for Quarter 1.</p>
+    `;
+
+  }
+
+}
 
 
     loadRoadmap();
