@@ -74,9 +74,7 @@
     async function fetchRoadmapData() {
 
       const url =
-        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}` +
-        `?fields[]=Status` +
-        `&fields[]=Goal`;
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`;
 
 
       try {
@@ -101,7 +99,7 @@
 
         const data = await response.json();
 
-        console.log('Airtable roadmap data:', data);
+        console.log('Airtable data:', data);
 
         return data.records;
 
@@ -111,7 +109,7 @@
       catch (error) {
 
         console.error(
-          'Error fetching roadmap data from Airtable:',
+          'Error fetching data from Airtable:',
           error
         );
 
@@ -121,10 +119,6 @@
 
     }
 
-
-    // --------------------------------------------------
-    // Display the roadmap
-    // --------------------------------------------------
 
     async function loadRoadmap() {
 
@@ -142,6 +136,9 @@
       records.forEach(record => {
 
         const fields = record.fields;
+
+        console.log('Record:', fields);
+
 
         const status =
           fields['Status'] || '';
@@ -168,17 +165,13 @@
       if (records.length === 0) {
 
         container.innerHTML = `
-          <li>No roadmap information found.</li>
+          <li>No records found in Airtable.</li>
         `;
 
       }
 
     }
 
-
-    // --------------------------------------------------
-    // Run when the page loads
-    // --------------------------------------------------
 
     loadRoadmap();
 
