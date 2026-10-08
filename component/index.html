@@ -2,70 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Components</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f9f9f9;
-    }
-
-    h1 {
-      color: #333;
-    }
-  </style>
+  <title>Component</title>
 </head>
 
 <body>
 
-  <h1>Components</h1>
+  <h1>Alert</h1>
 
-  <div id="components">
+  <div id="airtable-data">
     Loading...
   </div>
 
-  <script src="/js/airtable.js"></script>
-
   <script>
+    const AIRTABLE_PAT = 'patap6Duxb9WAQDz5.fcba236c56eee9b8cab1cd9365cb4a9c1e8fef9e32124613332d73d7b019f350';
+    const BASE_ID = 'app2Jrt1yk2MisSqo';
+    const TABLE_ID = 'tbl31F7EhBfNxD3EI';
+
     async function fetchAirtableData() {
-    const formula = "{Component Name}='Alert'";
+      const formula = "{Component Name}='Alert'";
 
-    const url =
-      `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}` +
-      `?filterByFormula=${encodeURIComponent(formula)}` +
-      `&fields[]=WCAG%20Conformance%20Level` +
-      `&fields[]=Version%20last%20tested`;
+      const url =
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}` +
+        `?filterByFormula=${encodeURIComponent(formula)}` +
+        `&fields[]=WCAG%20Conformance%20Level` +
+        `&fields[]=Version%20last%20tested`;
 
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${AIRTABLE_PAT}`
-        }
-      });
+      try {
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_PAT}`
+          }
+        });
 
-      const data = await response.json();
-      return data.records;
+        const data = await response.json();
 
-    } catch (error) {
-      console.error('Error fetching data from Airtable:', error);
-      return [];
+        console.log(data);
+
+        return data.records;
+
+      } catch (error) {
+        console.error('Error fetching data from Airtable:', error);
+        return [];
+      }
     }
-  }
 
-  async function loadPage() {
-    const records = await fetchAirtableData();
+    async function loadPage() {
+      const records = await fetchAirtableData();
 
-    if (records.length > 0) {
-      const fields = records[0].fields;
+      if (records.length > 0) {
+        const fields = records[0].fields;
 
-      document.getElementById('airtable-data').innerHTML = `
-        <p>WCAG Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
-        <p>Version last tested: ${fields['Version last tested'] || ''}</p>
-      `;
+        document.getElementById('airtable-data').innerHTML = `
+          <p>WCAG Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
+          <p>Version last tested: ${fields['Version last tested'] || ''}</p>
+        `;
+      }
     }
-  }
-
 
     loadPage();
   </script>
