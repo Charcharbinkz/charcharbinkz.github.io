@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Components</title>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Components</h1>
+
+  <div id="components">
+    Loading...
+  </div>
+
+  <script src="/js/airtable.js"></script>
+
+  <script>
+    async function loadComponents() {
+      const records = await fetchAirtableData();
+
+      const container = document.getElementById('components');
+
+      container.innerHTML = '';
+
+      records.forEach(record => {
+        const fields = record.fields;
+
+        const component = document.createElement('div');
+
+        component.innerHTML = `
+          <h2>${fields['Component Name'] || ''}</h2>
+          <p>WCAG Version: ${fields['WCAG Version'] || ''}</p>
+          <p>Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
+        `;
+
+        container.appendChild(component);
+      });
+    }
+
+    loadComponents();
+  </script>
+
+</body>
+</html>
