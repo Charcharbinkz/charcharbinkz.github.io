@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Roadmap • GC Design System</title>
+  <title>Roadmap </title>
 
   <style>
     body {
@@ -24,6 +24,12 @@
     h1 {
       font-size: 2rem;
       margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 35px;
+      margin-bottom: 15px;
     }
 
     ul {
@@ -47,9 +53,23 @@
 
     <h1>Roadmap</h1>
 
-    <ul id="roadmap-data">
-      <li>Loading...</li>
-    </ul>
+
+    <!-- Quarter 1 -->
+
+    <h2>Quarter 1</h2>
+
+    <div id="quarter-1">
+      <p>Loading...</p>
+    </div>
+
+
+    <!-- Quarter 2 -->
+
+    <h2>Quarter 2</h2>
+
+    <div id="quarter-2">
+      <p>Loading...</p>
+    </div>
 
   </main>
 
@@ -68,7 +88,7 @@
 
 
     // --------------------------------------------------
-    // Get Status and Goal from Airtable
+    // Get roadmap data from Airtable
     // --------------------------------------------------
 
     async function fetchRoadmapData() {
@@ -120,82 +140,104 @@
     }
 
 
+    // --------------------------------------------------
+    // Display roadmap
+    // --------------------------------------------------
+
     async function loadRoadmap() {
 
-  const container =
-    document.getElementById('roadmap-data');
-
-  const records =
-    await fetchRoadmapData();
-
-  container.innerHTML = '';
+      const records =
+        await fetchRoadmapData();
 
 
-  // Only use records where Quarter = Quarter 1
+      const quarter1 =
+        document.getElementById('quarter-1');
 
-  const quarter1Records =
-    records.filter(record => {
-
-      return record.fields['Quarter'] === '1';
-
-    });
+      const quarter2 =
+        document.getElementById('quarter-2');
 
 
-  // Add the Quarter 1 heading
+      // Clear loading messages
 
-  const heading =
-    document.createElement('h2');
+      quarter1.innerHTML = '';
 
-  heading.textContent = 'Quarter 1';
-
-  container.appendChild(heading);
+      quarter2.innerHTML = '';
 
 
-  // Create the bullet list
+      // Create lists
 
-  const list =
-    document.createElement('ul');
+      const quarter1List =
+        document.createElement('ul');
 
-
-  quarter1Records.forEach(record => {
-
-    const fields = record.fields;
-
-    const status =
-      fields['Status'] || '';
-
-    const goal =
-      fields['Goal'] || '';
+      const quarter2List =
+        document.createElement('ul');
 
 
-    const listItem =
-      document.createElement('li');
+      // Add records to the appropriate quarter
+
+      records.forEach(record => {
+
+        const fields =
+          record.fields;
 
 
-    listItem.innerHTML = `
-      <span class="status">${status}</span>
-      — ${goal}
-    `;
+        const quarter =
+          String(fields['Quarter']);
 
 
-    list.appendChild(listItem);
+        const status =
+          fields['Status'] || '';
 
-  });
+        const goal =
+          fields['Goal'] || '';
 
 
-  container.appendChild(list);
+        const listItem =
+          document.createElement('li');
 
 
-  if (quarter1Records.length === 0) {
+        listItem.innerHTML = `
+          <span class="status">${status}</span>
+          — ${goal}
+        `;
 
-    container.innerHTML += `
-      <p>No roadmap information found for Quarter 1.</p>
-    `;
 
-  }
+        if (quarter === '1') {
 
-}
+          quarter1List.appendChild(
+            listItem
+          );
 
+        }
+
+
+        if (quarter === '2') {
+
+          quarter2List.appendChild(
+            listItem
+          );
+
+        }
+
+      });
+
+
+      // Add lists to the page
+
+      quarter1.appendChild(
+        quarter1List
+      );
+
+      quarter2.appendChild(
+        quarter2List
+      );
+
+    }
+
+
+    // --------------------------------------------------
+    // Run when the page loads
+    // --------------------------------------------------
 
     loadRoadmap();
 
