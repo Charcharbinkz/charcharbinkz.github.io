@@ -28,29 +28,46 @@
   <script src="/js/airtable.js"></script>
 
   <script>
-    async function loadComponents() {
-      const records = await fetchAirtableData();
+    async function fetchAirtableData() {
+    const formula = "{Component Name}='Alert'";
 
-      const container = document.getElementById('components');
+    const url =
+      `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}` +
+      `?filterByFormula=${encodeURIComponent(formula)}` +
+      `&fields[]=WCAG%20Conformance%20Level` +
+      `&fields[]=Version%20last%20tested`;
 
-      container.innerHTML = '';
-
-      records.forEach(record => {
-        const fields = record.fields;
-
-        const component = document.createElement('div');
-
-        component.innerHTML = `
-          <h2>${fields['Component Name'] || ''}</h2>
-          <p>WCAG Version: ${fields['WCAG Version'] || ''}</p>
-          <p>Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
-        `;
-
-        container.appendChild(component);
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_PAT}`
+        }
       });
-    }
 
-    loadComponents();
+      const data = await response.json();
+      return data.records;
+
+    } catch (error) {
+      console.error('Error fetching data from Airtable:', error);
+      return [];
+    }
+  }
+
+  async function loadPage() {
+    const records = await fetchAirtableData();
+
+    if (records.length > 0) {
+      const fields = records[0].fields;
+
+      document.getElementById('airtable-data').innerHTML = `
+        <p>WCAG Conformance Level: ${fields['WCAG Conformance Level'] || ''}</p>
+        <p>Version last tested: ${fields['Version last tested'] || ''}</p>
+      `;
+    }
+  }
+
+
+    loadPage();
   </script>
 
 </body>
